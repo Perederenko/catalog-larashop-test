@@ -1,1 +1,1 @@
-## The "Catalog-Shop" project based on Laravel 
+## The "Catalog-Shop" project build with Laravel 
