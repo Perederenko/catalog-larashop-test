@@ -20,7 +20,7 @@ class CreateProductCharacteristicTable extends Migration
             $table->integer('characteristic_id')->unsigned()->index();
             $table->foreign('characteristic_id')->references('id')->on('characteristics')->onDelete('cascade');
 
-            $table->string('value', 255);
+            $table->string('value', 255)->nullable();
         });
     }
 

@@ -31,6 +31,20 @@ class Product extends Model
     }
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'category_id',
+        'description',
+        'photo',
+        'price',
+        'link',
+    ];
+
+    /**
      * Get the category that owns the product.
      */
     public function category()
@@ -43,7 +57,26 @@ class Product extends Model
      */
     public function characteristics()
     {
-        return $this->belongsToMany('App\Characteristic')
-            ->withPivot('product_characteristic', 'value');
+        return $this->belongsToMany('App\Characteristic', 'product_characteristic', 'product_id', 'characteristic_id')
+            ->withPivot('value');
+    }
+
+    public static function boot ()
+    {
+        parent::boot();
+
+        self::saving(function($model){
+            $model->link = '/product/' . $model->slug;
+        });
+    }
+
+    /**
+     * Adds characteristics to this product
+     *
+     * @param $characteristics
+     */
+    public function addCharacteristics($characteristics)
+    {
+        $this->characteristics()->sync($characteristics);
     }
 }

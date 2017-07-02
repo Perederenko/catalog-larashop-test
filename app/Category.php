@@ -31,11 +31,39 @@ class Category extends Node
     }
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'link',
+    ];
+
+    /**
      * Get the products for the category.
      */
     public function products()
     {
         return $this->hasMany('App\Product');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countProductsByCategory()
+    {
+        return $this->products->count();
+    }
+
+    public static function boot ()
+    {
+        parent::boot();
+
+        self::saving(function($model){
+            $model->link = '/category/' . $model->slug;
+        });
     }
 
 

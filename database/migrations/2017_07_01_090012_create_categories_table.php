@@ -20,11 +20,14 @@ class CreateCategoriesTable extends Migration
             $table->integer('rgt')->nullable()->index();
             $table->integer('depth')->nullable();
             $table->string('name', 255);
-            $table->string('slug', 255);
-            $table->string('link', 255);
-            $table->text('description');
+            $table->string('slug', 255)->nullable();
+            $table->string('link', 255)->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
+
+        // Insert root category
+        \Illuminate\Support\Facades\Artisan::call('db:seed',['--class'=> 'RootCategoryTableSeeder']);
     }
 
     /**
