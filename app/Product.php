@@ -4,10 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Product extends Model
 {
     use Sluggable;
+    use SluggableScopeHelpers;
+    use SearchableTrait;
 
     /**
      * Table name.
@@ -45,6 +49,18 @@ class Product extends Model
     ];
 
     /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'name' => 10,
+            'description' => 10,
+        ],
+    ];
+
+    /**
      * Get the category that owns the product.
      */
     public function category()
@@ -78,5 +94,38 @@ class Product extends Model
     public function addCharacteristics($characteristics)
     {
         $this->characteristics()->sync($characteristics);
+    }
+
+    /**
+     * Gets more products in the same category, takes 4
+     *
+     * @param $query
+     * @param $product
+     * @return mixed
+     */
+    public function scopeMoreProducts($query, $product){
+        return $query->where('category_id', $product->category->id)->where('id', '!=', $product->id)->take(4);
+    }
+
+    /**
+     * Gets popular products, takes 4
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopePopularProducts($query){
+        return $query->orderBy('view_number', 'desc')->take(4);
+    }
+
+    /**
+     * Get url for logo.
+     *
+     * @return string
+     */
+    public function getImage(){
+        if($this->photo){
+            return '/uploaded/products/' . $this->photo;
+        }
+        return false;
     }
 }

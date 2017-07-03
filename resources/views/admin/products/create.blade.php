@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-8">
             <div class="box box-primary">
-                {!! Form::open(['url' => 'admin/products']) !!}
+                {!! Form::open(['url' => 'admin/products', 'enctype' => 'multipart/form-data']) !!}
                 <div class="box-body">
                     @include('admin.products.form', ['submitButtonText' => 'Add'])
                 </div><!-- /.box-body -->

@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-8">
             <div class="box box-primary">
-                {!! Form::model($product, ['method' => 'PATCH', 'action' => ['Admin\ProductController@update', $product->id]]) !!}
+                {!! Form::model($product, ['method' => 'PATCH', 'action' => ['Admin\ProductController@update', $product->id], 'enctype' => 'multipart/form-data']) !!}
                 <div class="box-body">
                     @include('admin.products.form', ['submitButtonText' => 'Edit'])
                 </div><!-- /.box-body -->

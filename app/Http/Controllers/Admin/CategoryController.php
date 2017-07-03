@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::allLeaves()->get();
+        $categories = Category::first()->getDescendants();
 
         return view('admin.categories.index', compact('categories'));
     }

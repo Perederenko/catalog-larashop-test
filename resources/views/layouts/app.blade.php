@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -36,7 +36,8 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li class="active"><a href="{{ route('home') }}">Home</a></li>
+                        <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -67,6 +68,14 @@
                             </li>
                         @endif
                     </ul>
+
+                    {!! Form::open(['url' => 'search', 'class' => 'navbar-form navbar-right', 'method' => 'get']) !!}
+                    <div class="form-group">
+                        {!! Form::text('query', null, ['class' => 'form-control', 'placeholder' => 'Search']) !!}
+                    </div>
+                    <button class="btn btn-default">Submit</button>
+                    {!! Form::close() !!}
+
                 </div>
             </div>
         </nav>

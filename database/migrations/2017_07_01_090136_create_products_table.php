@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('slug', 255);
             $table->string('link', 255);
             $table->text('description');
-            $table->integer('photo')->nullable();
+            $table->string('photo')->nullable();
             $table->decimal( 'price', 10, 2 )->default(0.00);
             $table->integer('view_number')->default(0);
             $table->timestamps();

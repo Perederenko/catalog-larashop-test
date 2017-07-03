@@ -26,7 +26,7 @@
                         <tbody>
                         @foreach($products as $product)
                             <tr>
-                                <td></td>
+                                <td><img src="{{ $product->getImage() }}" alt="{{ $product->photo }}"class="img-thumbnail"></td>
                                 <td>{{ $product->created_at->format('Y-m-d') }}</td>
                                 <td><a href="{{ route('admin.products.edit', ['products'=> $product->id]) }}">{{ $product->name }}</a></td>
                                 <td>{{ $product->category->name }}</td>

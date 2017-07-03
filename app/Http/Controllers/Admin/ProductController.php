@@ -44,6 +44,9 @@ class ProductController extends Controller
     public function store(ProductFormRequest $request)
     {
         $product = Product::create($request->all());
+        if($request->hasFile('file')){
+            $request['photo'] = $this->uploadFile($request, 'file');
+        }
 
         return redirect()->route('admin.products.edit', ['id' => $product->id]);
     }
@@ -73,6 +76,9 @@ class ProductController extends Controller
     public function update(ProductFormRequest $request, $id)
     {
         $product = Product::findOrFail($id);
+        if($request->hasFile('file')){
+            $request['photo'] = $this->uploadFile($request, 'file');
+        }
         $product->update($request->all());
 
         foreach ($product->characteristics as $characteristic) {
@@ -110,5 +116,22 @@ class ProductController extends Controller
         $product->addCharacteristics($request->characteristics);
 
         return back();
+    }
+
+    /**
+     * Upload image.
+     *
+     * @param $request
+     * @param $file
+     * @return bool|string
+     */
+    public function uploadFile($request, $file){
+        $loadFile = $request->file($file);
+        if($request->hasFile($file) && $loadFile->isValid()){
+            $newName = time() . '-' . $loadFile->getClientOriginalName();
+            $loadFile->move('uploaded/products/', $newName);
+            return $newName;
+        }
+        return false;
     }
 }

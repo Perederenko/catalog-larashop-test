@@ -4,10 +4,12 @@ namespace App;
 
 use Baum\Node;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Category extends Node
 {
     use Sluggable;
+    use SluggableScopeHelpers;
 
     /**
      * Table name.
